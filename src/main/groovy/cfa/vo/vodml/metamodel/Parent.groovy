@@ -38,5 +38,6 @@ trait Parent {
         if (child.vodmlid == null) {
             child.vodmlid = vodmlid.append(child.name)
         }
+        child.model = this.model
     }
 }

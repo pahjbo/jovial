@@ -83,6 +83,7 @@ class Model implements Buildable, PackageLike {
         if (child.vodmlid == null) {
             child.vodmlid = new VodmlRef(child.name)
         }
+        child.model = this
     }
 
     @Override

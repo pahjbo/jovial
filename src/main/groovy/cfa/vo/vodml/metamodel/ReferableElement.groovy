@@ -42,10 +42,15 @@ import groovy.transform.EqualsAndHashCode
 abstract class ReferableElement {
     String name
     VodmlRef vodmlid
+    Model model
     String description
 
     public setVodmlid(String ref) {
         vodmlid = new VodmlRef(ref)
+    }
+
+    public getVodmlref() {
+        return new VodmlRef(model.name, vodmlid.reference)
     }
 
     @Override
