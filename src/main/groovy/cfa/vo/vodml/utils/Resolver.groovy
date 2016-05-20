@@ -43,9 +43,9 @@ import cfa.vo.vodml.metamodel.Type
  */
 @Singleton
 class Resolver {
-    private List<Model> models = []
-    private Map<VodmlRef, Type> types = [:]
-    private Map<VodmlRef, Role> roles = [:]
+    List<Model> models = []
+    Map<VodmlRef, Type> types = new HashMap<>()
+    Map<VodmlRef, Role> roles = [:]
 
     /**
      * Resolve a {@link Type} given a reference as a String
@@ -153,12 +153,6 @@ class Resolver {
                 return "extends"(directParent, parent)
             }
         }
-    }
-
-    def getTypesMatching(String s) {
-        return types.values().findAll {
-            it.name.contains(s)
-        }*.vodmlref
     }
 
     /**
