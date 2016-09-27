@@ -38,10 +38,8 @@ import cfa.vo.vodml.metamodel.ElementRef
 import cfa.vo.vodml.metamodel.Model
 import cfa.vo.vodml.metamodel.Multiplicity
 import cfa.vo.vodml.utils.VodmlRef
-import org.custommonkey.xmlunit.XMLUnit
-import spock.lang.Specification
 
-class ModelBuilderTest extends Specification {
+class ModelBuilderTest {
     def builder = new ModelBuilder()
 
     def "test no factory"() {
