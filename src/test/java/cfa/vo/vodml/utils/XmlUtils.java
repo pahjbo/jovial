@@ -37,6 +37,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.*;
+import org.xmlunit.util.Predicate;
 
 public class XmlUtils {
 
@@ -52,6 +53,7 @@ public class XmlUtils {
 
         Diff diff = baseBuilder(control, actual)
                 .withNodeMatcher(new DefaultNodeMatcher(selector, ElementSelectors.Default))
+                .withNodeFilter(new ModelNodeFilter())
                 .build();
 
         doTest(diff);
@@ -70,6 +72,14 @@ public class XmlUtils {
                 .ignoreWhitespace()
                 .ignoreComments()
                 .normalizeWhitespace();
+    }
+
+    public static class ModelNodeFilter implements Predicate<Node> {
+
+        @Override
+        public boolean test(Node node) {
+            return !node.getNodeName().equals("identifier");
+        }
     }
 
     public static class ModelMatcher implements ElementSelector {
