@@ -30,33 +30,18 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
-package cfa.vo.vodml.instance
+package cfa.vo.vodml.io
 
-import cfa.vo.vodml.utils.TestResolver
-import cfa.vo.vodml.utils.VodmlRef
-import org.junit.Test
+import cfa.vo.vodml.io.instance.AltVotableWriter
 
-import static cfa.vo.vodml.io.instance.VotableWriter.infer
-
-class ValueInstanceTest {
-    private TestResolver resolver = new TestResolver()
-
-    @Test
-    public void testString() {
-        assert [datatype: "char", arraysize: '6'] == infer("string")
-        assert [datatype: "char", arraysize: '5'] == infer("sting")
-        assert [datatype: "int", arraysize: '1'] == infer(35)
-        assert [datatype: "float", arraysize: '1'] == infer(3.5)
-        assert [datatype: "float", arraysize: '1'] == infer(1.0)
-        assert [datatype: "float", arraysize: '3'] == infer([1.0, 1.1, 1.2])
-        assert [datatype: "int", arraysize: '2'] == infer([1, 2])
-        assert [datatype: "float", arraysize: '3'] == infer([1.0, 1.1, 1.2].toArray())
-        assert [datatype: "float", arraysize: '3'] == infer([1.0, 1.1, 1.2] as Set)
-    }
-
-    @Test
-    public void testType() {
-        LiteralInstance instance = new LiteralInstance(role: new VodmlRef("ds:party.Party.name"))
-        assert new VodmlRef("ivoa:string") == instance.type
+public class Main {
+    public static void main(String[] args) {
+        def modelString = new File(args[0]).text
+        def builder = new VoTableBuilder()
+        def binding = new Binding(votable: builder.&script, resources: getClass().getResource("/").toString())
+        def shell = new GroovyShell(Main.class.classLoader, binding)
+        def model = shell.evaluate modelString
+        def writer = new AltVotableWriter()
+        writer.write(model, System.out)
     }
 }
